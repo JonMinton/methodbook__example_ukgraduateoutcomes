@@ -1,0 +1,444 @@
+---
+title: "RCUK Funding"
+output: html_notebook
+---
+
+# Introduction 
+
+This document will explore the distribution of research done by council in the UK, and how it has changed over time.
+
+ Links 
+http://www.rcuk.ac.uk/research/efficiency/successrates/
+
+
+Subjects by research council are described here: 
+
+Arts and Humanities Research Council (AHRC)
+The AHRC supports research across a wide subject domains including:
+
+history (ancient, medieval and modern);
+classics;
+archaeology;
+modern languages and linguistics;
+English language and literature;
+the visual arts and media;
+librarianship, information and museum studies;
+philosophy, law, religious studies;
+music and creative and performing arts.
+Biotechnology and Biological Sciences Research Council (BBSRC)
+BBSRC funds research in the biosciences, in areas including:
+
+Genomics, stem cell biology, and bio-nanotechnology, that provide a basis for new technologies in healthcare, food safety, plant and livestock breeding, and bio-processing;
+Whole organism biology relevant to the understanding of diet and health, ageing, animal health and welfare, infectious diseases and immunity, and crop productivity;
+Biological populations and systems that underpin agricultural sustainability, biodiversity and novel bio-based and renewable processes for energy and manufacturing.
+
+Engineering and Physical Sciences Research Council (EPSRC)
+EPSRC supports fundamental research in the physical sciences through to more applied topics in engineering and technology. This includes research in the following areas:
+mathematics;
+chemistry;
+physics;
+materials science;
+engineering;
+computer science, including high performance computing;
+energy research;
+research into the built environment;
+information and communications technology;
+research into innovative manufacturing.
+Economic and Social Research Council (ESRC)
+ESRC funds social science and economic research across a wide of disciplines encompassing:
+
+Demography and human geography
+Development studies
+Economics
+History
+Education
+Environmental planning
+Linguistics
+Management and business studies
+Political science and international studies
+Psychology
+Social anthropology
+Social policy
+Social work
+Sociology
+Law and legal studies
+Tools, technologies and methods
+
+
+Medical Research Council (MRC)
+The MRC’s remit covers the full range of medical research from studies of molecules to the implementation of research findings into clinical practice. This includes such topics as:
+the use of animals in research;
+antibiotic resistance;
+brain sciences;
+genomics and proteomics;
+health of the public;
+intensive care;
+patient safety research;
+stem cell research.
+
+
+Natural Environment Research Council (NERC)
+NERC funds environmental research, survey and observation work across a wide spectrum of disciplines, including:
+the geo- and earth sciences, hydrology, soil science, atmospheric research and oceanography;
+biological and microbiological research on animal and plant biodiversity, population dynamics and ecology;
+climate change research;
+environmental chemistry and physics;
+satellite based Earth observation;
+polar research;
+management of land and natural resources.
+
+Science and Technology Facilities Council (STFC)
+Amongst others, STFC's areas of research include:
+astronomy;
+computational science;
+energy;
+nuclear physics;
+particle physics;
+space science.
+
+Source: http://www.rcuk.ac.uk/research/Areas/
+
+
+# Regional funding data 
+
+http://www.rcuk.ac.uk/about/aboutrcs/research-funding-across-the-uk/
+
+
+
+# Page 
+ - success rates for grant funding 
+ http://www.rcuk.ac.uk/research/efficiency/successrates/
+ 
+ Provides separate links to 
+ 
+http://www.ahrc.ac.uk/about/statistics/competitionstatistics/
+http://www.bbsrc.ac.uk/funding/apply/post_award_overview.html
+http://www.epsrc.ac.uk/funding/successrates/Pages/successrates.aspx
+http://www.esrc.ac.uk/about-us/strategy-and-priorities/demand-management/funding-decisions
+http://www.mrc.ac.uk/documents/xls-csv/success-rates/
+http://www.nerc.ac.uk/funding/application/howtoapply/success/
+http://www.stfc.ac.uk/funding/research-grants/
+
+Not at all standardized
+
+Closest to usable infromation from THES article, 2016
+https://www.timeshighereducation.com/news/uk-grant-success-rates-prompt-worldwide-comparisons
+
+Table : overall UK research council success rates 
+
+```{r}
+require(tidyverse)
+
+overall_by_council <- tribble(
+  ~council_name, ~n_applications, ~n_grants, ~success_pct, ~amount, 
+  "Arts & Humanities Research Council", 246, 68, 28, 29851958,
+  "Biotechnology & Biological Sciences Research Council", 1621, 392, 24, 178719000,
+  "Engineering & Physical Sciences Research Council", 2419, 786, 33, 509476006,
+  "Economic & Social Research Council", 429, 52, 12, 24107303,
+  "Medical Research Council", 1993, 402, 20, 283520000,
+  "Natural Environment Research Council", 1036, 311, 30, 86871071
+)
+# For year 2016 
+```
+Now to plot this
+```{r}
+overall_by_council %>% 
+  ggplot(aes(x = forcats::fct_reorder(council_name, amount), y = amount)) + 
+  geom_bar(stat = "identity") +
+  coord_flip()+ 
+  labs(x = )
+```
+
+Let's try a treemap
+
+```{r}
+require(treemap)
+treemap(
+  overall_by_council,
+  index = "council_name",
+  vSize = "amount",
+  title ="Research funding by council in 2016"
+  
+)
+
+```
+ Now research grant success rates 
+ 
+```{r}
+overall_by_council %>% 
+  mutate(success_rate = n_grants / n_applications) %>%  
+  treemap(
+    .,
+    index = "council_name",
+    vSize = "success_rate",
+    title ="Grant success rates by council in 2016"
+  
+)
+ 
+```
+
+Now let's look at the number of students who enter each subject 
+
+We have this data from the following location:
+
+https://www.hesa.ac.uk/news/11-01-2018/sfr247-higher-education-student-statistics/subjects
+
+```{r}
+read_csv(
+  "data/sfr247-figure-14 (1).csv",
+  skip = 13, col_names = F 
+  ) -> tmp
+
+tmp[1,1] <- "year"
+tmp[1,2:5] <- 2012
+tmp[1,6:9] <- 2013
+tmp[1, 10:13] <- 2014
+tmp[1, 14:17] <- 2015
+tmp[1, 18:21] <- 2016
+tmp
+tmp2 <- tmp[-1,]
+names(tmp2) <- tmp[1,]
+tmp2
+
+dta_tidy <- bind_rows(
+  tmp %>% (function(..){
+    .. %>% 
+    select(X1:X5) %>% mutate(year = 2012) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  }),
+  tmp %>% (function(..){
+    .. %>% 
+      select(X1, X6:X9) %>% mutate(year = 2013) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  }),
+  tmp %>% (function(..){
+    .. %>% 
+      select(X1, X10:X13) %>% mutate(year = 2014) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  }),
+  tmp %>% (function(..){
+    .. %>% 
+      select(X1, X10:X13) %>% mutate(year = 2014) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  }),
+  tmp %>% (function(..){
+    .. %>% 
+      select(X1, X14:X17) %>% mutate(year = 2015) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  }),
+    tmp %>% (function(..){
+    .. %>% 
+      select(X1, X18:X21) %>% mutate(year = 2016) %>% slice(-c(1,2)) -> ..
+    names(..) <- c("subject", "female", "male", "other", "total", "year")
+    ..
+  })
+) %>% 
+  gather(female:total, key = gender, value = "number") %>% 
+  mutate(number = number %>% 
+           stringr::str_replace(",", "") %>%
+           as.numeric
+  )
+
+
+```
+
+Now to get a lookup for students to research council
+
+
+```{r}
+
+subject_council_lookup <- tribble(
+  ~subject_name, ~council,
+"(1) Medicine & dentistry", "mrc",
+"(2) Subjects allied to medicine", "mrc",
+"(3) Biological sciences", "bbsrc",
+"(4) Veterinary science", "nerc",
+"(5) Agriculture & related subjects", "nerc",
+"(6) Physical sciences", "epsrc",
+"(7) Mathematical sciences", "epsrc",
+"(8) Computer science", "epsrc",
+"(9) Engineering & technology", "epsrc",
+"(A) Architecture, building & planning", "esrc",
+"(B) Social studies", "esrc",
+"(C) Law", "esrc",
+"(D) Business & administrative studies", "esrc",
+"(E) Mass communications & documentation", "esrc",
+"(F) Languages", "ahrc",
+"(G) Historical & philosophical studies", "arhc",
+"(H) Creative arts & design", "ahrc",
+"(I) Education", "esrc",
+"(J) Combined", NA
+)
+
+council_abbreviation_lookup <- tribble(
+  ~abbreviation, ~full_name,
+  "mrc","Medical Research Council",
+  "esrc", "Economic & Social Research Council",
+  "epsrc","Engineering & Physical Sciences Research Council",
+  "nerc","Natural Environment Research Council",
+  "ahrc", "Arts & Humanities Research Council",
+  "bbsrc","Biotechnology & Biological Sciences Research Council"
+)
+
+
+```
+Now let's try to join the data 
+```{r}
+subject_council_lookup %>% 
+  inner_join(
+    dta_tidy %>% 
+      filter(year == 2016) %>% 
+      filter(gender == "total"),
+    by = c("subject_name"="subject")
+    ) %>% 
+  group_by(council) %>% 
+  summarise(number = sum(number, na.rm = T)) %>% 
+  filter(!is.na(council)) %>% 
+  inner_join(
+    council_abbreviation_lookup,
+    by = c("council"="abbreviation")
+  ) %>% 
+  treemap(
+    .,
+    index = "full_name",
+    vSize = "number",
+    title ="Approximate number of students by research council area"
+    
+  )
+    
+
+```
+
+Now let's look at association
+
+```{r}
+
+subject_council_lookup %>% 
+  inner_join(
+    dta_tidy %>% 
+      filter(year == 2016) %>% 
+      filter(gender == "total"),
+    by = c("subject_name"="subject")
+    ) %>% 
+  group_by(council) %>% 
+  summarise(number = sum(number, na.rm = T)) %>% 
+  filter(!is.na(council)) %>% 
+  inner_join(
+    council_abbreviation_lookup,
+    by = c("council"="abbreviation")
+  ) %>% 
+  left_join(
+    overall_by_council %>% select(council_name, research_funding = amount), 
+    by = c("full_name"="council_name")
+  ) %>% 
+  select(
+    council_name = full_name,
+    number_of_students = number, 
+    research_funding
+  ) %>% 
+  left_join(
+    council_abbreviation_lookup,
+    by = c("council_name"="full_name")
+  ) %>% 
+  mutate(research_funding = research_funding / 1000000) %>% 
+  mutate(number_of_students = number_of_students / 1000) %>% 
+  ggplot(aes(x = number_of_students, y = research_funding, label = abbreviation)) + 
+  geom_label() +
+  labs(y = "Research council funding  allocated in 2016 (£Millions)",
+         x = "Number of students enrolling in 2016 (thousands)",
+       title = "Differences between research fields: students vs research funds"
+  )
+
+```
+
+Subjects by research council are described here: 
+
+Arts and Humanities Research Council (AHRC)
+The AHRC supports research across a wide subject domains including:
+
+history (ancient, medieval and modern);
+classics;
+archaeology;
+modern languages and linguistics;
+English language and literature;
+the visual arts and media;
+librarianship, information and museum studies;
+philosophy, law, religious studies;
+music and creative and performing arts.
+
+Biotechnology and Biological Sciences Research Council (BBSRC)
+BBSRC funds research in the biosciences, in areas including:
+Genomics, stem cell biology, and bio-nanotechnology, that provide a basis for new technologies in healthcare, food safety, plant and livestock breeding, and bio-processing;
+Whole organism biology relevant to the understanding of diet and health, ageing, animal health and welfare, infectious diseases and immunity, and crop productivity;
+Biological populations and systems that underpin agricultural sustainability, biodiversity and novel bio-based and renewable processes for energy and manufacturing.
+
+Engineering and Physical Sciences Research Council (EPSRC)
+EPSRC supports fundamental research in the physical sciences through to more applied topics in engineering and technology. This includes research in the following areas:
+mathematics;
+chemistry;
+physics;
+materials science;
+engineering;
+computer science, including high performance computing;
+energy research;
+research into the built environment;
+information and communications technology;
+research into innovative manufacturing.
+
+Economic and Social Research Council (ESRC)
+ESRC funds social science and economic research across a wide of disciplines encompassing:
+Demography and human geography
+Development studies
+Economics
+History
+Education
+Environmental planning
+Linguistics
+Management and business studies
+Political science and international studies
+Psychology
+Social anthropology
+Social policy
+Social work
+Sociology
+Law and legal studies
+Tools, technologies and methods
+
+
+Medical Research Council (MRC)
+The MRC’s remit covers the full range of medical research from studies of molecules to the implementation of research findings into clinical practice. This includes such topics as:
+the use of animals in research;
+antibiotic resistance;
+brain sciences;
+genomics and proteomics;
+health of the public;
+intensive care;
+patient safety research;
+stem cell research.
+
+
+Natural Environment Research Council (NERC)
+NERC funds environmental research, survey and observation work across a wide spectrum of disciplines, including:
+the geo- and earth sciences, hydrology, soil science, atmospheric research and oceanography;
+biological and microbiological research on animal and plant biodiversity, population dynamics and ecology;
+climate change research;
+environmental chemistry and physics;
+satellite based Earth observation;
+polar research;
+management of land and natural resources.
+
+Science and Technology Facilities Council (STFC)
+Amongst others, STFC's areas of research include:
+astronomy;
+computational science;
+energy;
+nuclear physics;
+particle physics;
+space science.
+
+Source: http://www.rcuk.ac.uk/research/Areas/
