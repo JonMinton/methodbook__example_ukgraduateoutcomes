@@ -1,6 +1,9 @@
 ---
 title: "RCUK Funding"
-output: html_notebook
+output:
+  html_document: default
+  html_notebook: default
+  pdf_document: default
 ---
 
 # Introduction 
@@ -139,14 +142,37 @@ overall_by_council <- tribble(
   "Natural Environment Research Council", 1036, 311, 30, 86871071
 )
 # For year 2016 
+
 ```
+
+Let's draw this as a neat table 
+
+
+```{r, results = 'asis'}
+require(knitr)
+overall_by_council %>% 
+  mutate(pct_funding = round(100 * amount / sum(amount), 1)) %>% 
+  kable(., caption = "UK Research Council Statistics, 2016")
+
+```
+
 Now to plot this
+
 ```{r}
 overall_by_council %>% 
   ggplot(aes(x = forcats::fct_reorder(council_name, amount), y = amount)) + 
   geom_bar(stat = "identity") +
-  coord_flip()+ 
-  labs(x = )
+  coord_flip() + 
+  labs (x = "Council", y = "Amount")
+```
+
+Let's draw mean amounts per grant 
+
+```{r}
+overall_by_council %>% 
+  mutate(mean_grant = amount / n_grants) %>% 
+  arrange(mean_grant)
+
 ```
 
 Let's try a treemap
@@ -162,6 +188,7 @@ treemap(
 )
 
 ```
+ 
  Now research grant success rates 
  
 ```{r}
