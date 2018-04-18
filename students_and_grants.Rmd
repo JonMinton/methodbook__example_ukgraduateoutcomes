@@ -16,88 +16,99 @@ http://www.rcuk.ac.uk/research/efficiency/successrates/
 
 Subjects by research council are described here: 
 
-Arts and Humanities Research Council (AHRC)
+* Arts and Humanities Research Council (AHRC)
 The AHRC supports research across a wide subject domains including:
 
-history (ancient, medieval and modern);
-classics;
-archaeology;
-modern languages and linguistics;
-English language and literature;
-the visual arts and media;
-librarianship, information and museum studies;
-philosophy, law, religious studies;
-music and creative and performing arts.
-Biotechnology and Biological Sciences Research Council (BBSRC)
+* history (ancient, medieval and modern);
+* classics;
+* archaeology;
+* modern languages and linguistics;
+* English language and literature;
+* the visual arts and media;
+* librarianship, information and museum studies;
+* philosophy, law, religious studies;
+* music and creative and performing arts.
+
+* Biotechnology and Biological Sciences Research Council (BBSRC)
+
 BBSRC funds research in the biosciences, in areas including:
 
-Genomics, stem cell biology, and bio-nanotechnology, that provide a basis for new technologies in healthcare, food safety, plant and livestock breeding, and bio-processing;
-Whole organism biology relevant to the understanding of diet and health, ageing, animal health and welfare, infectious diseases and immunity, and crop productivity;
-Biological populations and systems that underpin agricultural sustainability, biodiversity and novel bio-based and renewable processes for energy and manufacturing.
+* Genomics, stem cell biology, and bio-nanotechnology, that provide a basis for new technologies in healthcare, food safety, plant and livestock breeding, and bio-processing;
+* Whole organism biology relevant to the understanding of diet and health, ageing, animal health and welfare, infectious diseases and immunity, and crop productivity;
+* Biological populations and systems that underpin agricultural sustainability, biodiversity and novel bio-based and renewable processes for energy and manufacturing.
 
-Engineering and Physical Sciences Research Council (EPSRC)
+* Engineering and Physical Sciences Research Council (EPSRC)
+
 EPSRC supports fundamental research in the physical sciences through to more applied topics in engineering and technology. This includes research in the following areas:
-mathematics;
-chemistry;
-physics;
-materials science;
-engineering;
-computer science, including high performance computing;
-energy research;
-research into the built environment;
-information and communications technology;
-research into innovative manufacturing.
-Economic and Social Research Council (ESRC)
+* mathematics;
+* chemistry;
+* physics;
+* materials science;
+* engineering;
+* computer science, including high performance computing;
+* energy research;
+* research into the built environment;
+* information and communications technology;
+* research into innovative manufacturing.
+
+* Economic and Social Research Council (ESRC)
+
 ESRC funds social science and economic research across a wide of disciplines encompassing:
 
-Demography and human geography
-Development studies
-Economics
-History
-Education
-Environmental planning
-Linguistics
-Management and business studies
-Political science and international studies
-Psychology
-Social anthropology
-Social policy
-Social work
-Sociology
-Law and legal studies
-Tools, technologies and methods
+* Demography and human geography
+* Development studies
+* Economics
+* History
+* Education
+* Environmental planning
+* Linguistics
+* Management and business studies
+* Political science and international studies
+* Psychology
+* Social anthropology
+* Social policy
+* Social work
+* Sociology
+* Law and legal studies
+* Tools, technologies and methods
 
 
 Medical Research Council (MRC)
+
 The MRC’s remit covers the full range of medical research from studies of molecules to the implementation of research findings into clinical practice. This includes such topics as:
-the use of animals in research;
-antibiotic resistance;
-brain sciences;
-genomics and proteomics;
-health of the public;
-intensive care;
-patient safety research;
-stem cell research.
+
+* the use of animals in research;
+* antibiotic resistance;
+* brain sciences;
+* genomics and proteomics;
+* health of the public;
+* intensive care;
+* patient safety research;
+* stem cell research.
 
 
 Natural Environment Research Council (NERC)
+
 NERC funds environmental research, survey and observation work across a wide spectrum of disciplines, including:
-the geo- and earth sciences, hydrology, soil science, atmospheric research and oceanography;
-biological and microbiological research on animal and plant biodiversity, population dynamics and ecology;
-climate change research;
-environmental chemistry and physics;
-satellite based Earth observation;
-polar research;
-management of land and natural resources.
+
+* the geo- and earth sciences, hydrology, soil science, atmospheric research and oceanography;
+* biological and microbiological research on animal and plant biodiversity, population dynamics and ecology;
+* climate change research;
+* environmental chemistry and physics;
+* satellite based Earth observation;
+* polar research;
+* management of land and natural resources.
 
 Science and Technology Facilities Council (STFC)
+
 Amongst others, STFC's areas of research include:
-astronomy;
-computational science;
-energy;
-nuclear physics;
-particle physics;
-space science.
+
+* astronomy;
+* computational science;
+* energy;
+* nuclear physics;
+* particle physics;
+* space science.
 
 Source: http://www.rcuk.ac.uk/research/Areas/
 
@@ -110,17 +121,17 @@ http://www.rcuk.ac.uk/about/aboutrcs/research-funding-across-the-uk/
 
 # Page 
  - success rates for grant funding 
- http://www.rcuk.ac.uk/research/efficiency/successrates/
+*  http://www.rcuk.ac.uk/research/efficiency/successrates/
  
  Provides separate links to 
  
-http://www.ahrc.ac.uk/about/statistics/competitionstatistics/
-http://www.bbsrc.ac.uk/funding/apply/post_award_overview.html
-http://www.epsrc.ac.uk/funding/successrates/Pages/successrates.aspx
-http://www.esrc.ac.uk/about-us/strategy-and-priorities/demand-management/funding-decisions
-http://www.mrc.ac.uk/documents/xls-csv/success-rates/
-http://www.nerc.ac.uk/funding/application/howtoapply/success/
-http://www.stfc.ac.uk/funding/research-grants/
+* http://www.ahrc.ac.uk/about/statistics/competitionstatistics/
+* http://www.bbsrc.ac.uk/funding/apply/post_award_overview.html
+* http://www.epsrc.ac.uk/funding/successrates/Pages/successrates.aspx
+* http://www.esrc.ac.uk/about-us/strategy-and-priorities/demand-management/funding-decisions
+* http://www.mrc.ac.uk/documents/xls-csv/success-rates/
+* http://www.nerc.ac.uk/funding/application/howtoapply/success/
+* http://www.stfc.ac.uk/funding/research-grants/
 
 Not at all standardized
 
